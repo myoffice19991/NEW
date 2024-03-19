@@ -57,7 +57,7 @@ def game(name):
     for i in range(2,-1,-1):
         a = random.randint(1, 3)
         ans = st.text_input("Guess a number (Press Enter to proceed")
-        ans = int(ans_text) if ans_text.strip() != '' else None
+        ans = int(ans) if ans.strip() != '' else None
         ans = int(ans)
         if a == ans:
             j += 1
