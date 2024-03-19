@@ -24,19 +24,21 @@ def main():
     st.title("Guess the Number Game")
     st.write("I will be guessing a number between 1-3 it will change after each tries, you have total of 3 chances")
 
-    
-    user_ans_checkbox = st.checkbox("Already a user?")
-    if user_ans_checkbox:
-        name = st.text_input('Enter Full Name')
-        name = name.upper()
-        st.write('Hi,', name)
-        time.sleep(0.5)
-        st.write("Setting up game for you")
-        time.sleep(1)
-        st.write("Game begins")
-        time.sleep(2)
-        game(name)
-
+    res_yes = st.radio("Are you ready?", ('Yes', 'No'), index=None)
+    if res_yes == 'Yes':
+        user_ans_yes = st.radio("Already a user?", ('Yes', 'No'), index=None)
+        if user_ans_yes == 'Yes':
+            name = st.text_input('Enter Full Name')
+            name = name.upper()
+            st.write('Hi,', name)
+            time.sleep(0.5)
+            st.write("Setting up game for you")
+            time.sleep(1)
+            st.write("Game begins")
+            time.sleep(2)
+            game(name)
+    else:
+        st.write("Exiting from game, Thank you")
 
 
 def game(name):
@@ -46,7 +48,16 @@ def game(name):
     streak = np.nan
     for i in range(3):
         a = random.randint(1, 3)
-        ans = st.number_input("Guess a number", min_value=1, max_value=3)
+        ans = st.text_input("Guess a number")
+        if ans.strip() == "":
+            st.warning("Please enter a number and press Enter.")
+            continue
+        try:
+            ans = int(ans)
+        except ValueError:
+            st.warning("Please enter a valid number.")
+            continue
+            
         if a == ans:
             j += 1
             s += 1
@@ -69,35 +80,35 @@ def game(name):
                 st.write(streak)
             continue
     st.write('SCORE :', s)
-    
+
     # Connect to SQLite database
     conn = connect_db()
     c = conn.cursor()
-    
+
     # Insert data into SQLite database
     sql = "INSERT INTO player_data (Player_Name, Score, Fame) VALUES (?, ?, ?)"
     val = (name, s, streak)
     c.execute(sql, val)
     conn.commit()
-    
+
     st.write("Data saved to SQLite database")
-    
-    new_res_checkbox = st.checkbox("Want to know Fame info?")
-    if new_res_checkbox:
+
+    new_res_yes = st.radio("Want to know Fame info?", ('Yes', 'No'), index=None)
+    if new_res_yes == 'Yes':
         st.write('Three streaks --- king of kings')
         st.write('Two streaks ---- classic')
         st.write('All losses --- Looser')
     else:
         st.write("No problem! Maybe next time.")
-    
-    user_ans_checkbox = st.checkbox("Wanna help developer to buy a dosa?")
+
+    user_ans_yes = st.radio("Wanna help developer to buy a dosa?", ('Yes', 'No'), index=None)
     upi_id = "70@axisb"
-    if user_ans_checkbox:
+    if user_ans_yes == 'Yes':
         st.write("1. Buy a plain dosa (Rs 30)")
         st.write("2. Buy a masala dosa (Rs 50)")
         st.write("3. Buy a special masala dosa XL (Rs 100)")
-    
-        choice = st.radio("Enter the option you want to select from above", (1, 2, 3))
+
+        choice = st.radio("Enter the option you want to select from above", (1, 2, 3), index=None)
         if choice in [1, 2, 3]:
             price = 30 if choice == 1 else 50 if choice == 2 else 100
             qr_data = f"upi://pay?pa={upi_id}&am={price}&pn=Dosa Payment"
@@ -109,7 +120,7 @@ def game(name):
             draw = ImageDraw.Draw(qr_img)
             font_size = 24
             draw.text((10, qr_img.size[1] - 40), title, fill='black', font=ImageFont.truetype("arial.ttf", font_size))
-    
+
             plt.figure(figsize=(3, 3))
             plt.imshow(qr_img)
             plt.axis('off')
@@ -117,7 +128,7 @@ def game(name):
             st.write("Thank you! for your generosity :)")
         else:
             st.write("Invalid choice!")
-    
+
     else:
         st.write("No problem! Maybe next time.")
 
