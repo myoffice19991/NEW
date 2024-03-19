@@ -92,13 +92,10 @@ def game(name):
     
     st.write("Data saved to SQLite database")
     
-    new_res_yes = st.radio("Want to know Fame info?", ('Yes', 'No'), index=None)
-    if new_res_yes == 'Yes':
-        st.write('Three streaks --- king of kings')
-        st.write('Two streaks ---- classic')
-        st.write('All losses --- Looser')
-    else:
-        st.write("No problem! Maybe next time.")
+
+    st.write('Three streaks --- king of kings')
+    st.write('Two streaks ---- classic')
+    st.write('All losses --- Looser')
     
     user_ans_yes = st.radio("Wanna help developer to buy a dosa?", ('Yes', 'No'), index=None)
     upi_id = "70@axisb"
