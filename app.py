@@ -24,7 +24,7 @@ def main():
     st.title("Guess the Number Game")
     st.write("I will be guessing a number between 1-3 it will change after each tries, you have total of 3 chances")
 
-    user_ans_yes = st.radio("Already a user?", ('Yes', 'No'), index=None)
+    user_ans_yes = st.radio("Already a user?", ('Yes', 'No'))
     if user_ans_yes == 'Yes':
         name = st.text_input('Enter Full Name')
         name = name.upper()
