@@ -56,7 +56,8 @@ def game(name):
     streak = np.nan
     for i in range(2,-1,-1):
         a = random.randint(1, 3)
-        ans = st.number_input("Guess a number (Press Enter to proceed)",key=f"guess_{i}")
+        ans = st.text_input("Guess a number (Press Enter to proceed")
+         ans = int(ans_text) if ans_text.strip() != '' else None
         ans = int(ans)
         if a == ans:
             j += 1
@@ -114,8 +115,8 @@ def game(name):
             qr.make(fit=True)
             qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
         
-            #plt.figure(figsize=(3, 3))
-            st.pyplot(plt.figure(figsize=(3, 3)))
+            plt.figure(figsize=(3, 3))
+    
             plt.imshow(qr_img)
             plt.axis('off')
             st.pyplot(border_pad=0)  # Adjust borderpad parameter to control the border size
