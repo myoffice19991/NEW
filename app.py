@@ -124,8 +124,8 @@ def game(name):
         
             # Display a message after the image
             st.write("Thank you! for your generosity :)")
-                else:
-                    st.write("Invalid choice!")
+            else:
+                st.write("Invalid choice!")
     
         else:
             st.write("No problem! Maybe next time.")
