@@ -57,9 +57,9 @@ def game(name):
     for i in range(2,-1,-1):
         a = random.randint(1, 3)
         ans = st.text_input("Guess a number (Press Enter to proceed)",key=f"guess_{i}")
-        if ans_text.strip():  # Check if the input is not empty
+        if ans.strip():  # Check if the input is not empty
             try:
-                ans = int(ans_text)
+                ans = int(ans)
             except ValueError:
                 st.write("Please enter a valid integer.")
                 continue
