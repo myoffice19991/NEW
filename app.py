@@ -24,19 +24,28 @@ def main():
     st.title("Guess the Number Game")
     st.write("I will be guessing a number between 1-3 it will change after each tries, you have total of 3 chances")
 
-    user_ans_yes = st.radio("Already a user?", ('Yes', 'No'))
+    name_entered = False
+
+
+    user_ans_yes = st.radio("Already a user?", ('Yes', 'No'), index=None)
     if user_ans_yes == 'Yes':
         name = st.text_input('Enter Full Name')
         name = name.upper()
-        st.write('Hi,', name)
-        time.sleep(0.5)
-        st.write("Setting up game for you")
-        time.sleep(1)
-        st.write("Game begins")
-        time.sleep(2)
-        game(name)
+        if name:
+            name_entered = True
+            st.write('Hi,', name)
+            time.sleep(0.5)
+            st.write("Setting up game for you")
+            time.sleep(1)
+            st.write("Game begins")
+            time.sleep(2)
+            game(name)
+        
     else:
         st.write("Exiting from game, Thank you")
+
+    if not name_entered:
+        return
 
 
 def game(name):
@@ -46,37 +55,33 @@ def game(name):
     streak = np.nan
     for i in range(3):
         a = random.randint(1, 3)
-        ans = st.text_input("Guess a number")
-        if ans.strip() == "":
-            st.warning("Please enter a number and press Enter.")
-            continue
-        try:
+        ans = st.text_input("Guess a number (Press Enter to proceed)")
+        if ans:
             ans = int(ans)
-        except ValueError:
-            st.warning("Please enter a valid number.")
-            continue
-            
-        if a == ans:
-            j += 1
-            s += 1
-            st.write("Bravo")
-            if j == 2:
-                streak = 'Classic'
-                st.write(streak)
-            if j == 3:
-                streak = 'KING OF KINGS'
-                st.write(streak)
-                break
-            continue
-        if a != ans:
-            st.write("Oh no!! I guessed", a)
-            time.sleep(0.5)
-            st.write(f"Try again......")
-            m += 1
-            if m == 3:
-                streak = 'LOOSSER'
-                st.write(streak)
-            continue
+            if a == ans:
+                j += 1
+                s += 1
+                st.write("Bravo")
+                if j == 2:
+                    streak = 'Classic'
+                    st.write(streak)
+                if j == 3:
+                    streak = 'KING OF KINGS'
+                    st.write(streak)
+                    break
+                continue
+            if a != ans:
+                st.write("Oh no!! I guessed", a)
+                time.sleep(0.5)
+                st.write(f"Try again......")
+                m += 1
+                if m == 3:
+                    streak = 'LOOSSER'
+                    st.write(streak)
+                continue
+        else:
+            st.write("Please enter a number to proceed.")
+            return
     st.write('SCORE :', s)
 
     # Connect to SQLite database
