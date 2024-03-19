@@ -113,7 +113,7 @@ def game(name):
             qr.add_data(qr_data)
             qr.make(fit=True)
             qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
-            resized_img = qr_img.resize((150, 150))  # Adjust the size as needed
+            resized_img = qr_img.resize((3, 3))  # Adjust the size as needed
 
             # Convert the PIL Image to bytes
             img_bytes = io.BytesIO()
