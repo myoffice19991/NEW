@@ -24,106 +24,105 @@ def main():
     st.title("Guess the Number Game")
     st.write("I will be guessing a number between 1-3 it will change after each tries, you have total of 3 chances")
 
-    res_button = st.button("Are you ready?")
-    if res_button:
-        user_ans_button = st.button("Already a user?")
-        if user_ans_button:
-            name = st.text_input('Enter Full Name')
-            name = name.upper()
-            st.write('Hi,', name)
-            time.sleep(0.5)
-            st.write("Setting up game for you")
-            time.sleep(1)
-            st.write("Game begins")
-            time.sleep(2)
-            game(name)
-        else:
-            st.write("Exiting from game, Thank you")
+    
+    user_ans_checkbox = st.checkbox("Already a user?")
+    if user_ans_checkbox:
+        name = st.text_input('Enter Full Name')
+        name = name.upper()
+        st.write('Hi,', name)
+        time.sleep(0.5)
+        st.write("Setting up game for you")
+        time.sleep(1)
+        st.write("Game begins")
+        time.sleep(2)
+        game(name)
     else:
         st.write("Exiting from game, Thank you")
+else:
+    st.write("Exiting from game, Thank you")
 
 
 def game(name):
-    j = 0
-    m = 0
-    s = 0
-    streak = np.nan
-    for i in range(3):
-        a = random.randint(1, 3)
-        ans = st.number_input("Guess a number", min_value=1, max_value=3)
-        if a == ans:
-            j += 1
-            s += 1
-            st.write("Bravo")
-            if j == 2:
-                streak = 'Classic'
-                st.write(streak)
-            if j == 3:
-                streak = 'KING OF KINGS'
-                st.write(streak)
-                break
-            continue
-        if a != ans:
-            st.write("Oh no!! I guessed", a)
-            time.sleep(0.5)
-            st.write(f"Try again......")
-            m += 1
-            if m == 3:
-                streak = 'LOOSSER'
-                st.write(streak)
-            continue
-    st.write('SCORE :', s)
+j = 0
+m = 0
+s = 0
+streak = np.nan
+for i in range(3):
+    a = random.randint(1, 3)
+    ans = st.number_input("Guess a number", min_value=1, max_value=3)
+    if a == ans:
+        j += 1
+        s += 1
+        st.write("Bravo")
+        if j == 2:
+            streak = 'Classic'
+            st.write(streak)
+        if j == 3:
+            streak = 'KING OF KINGS'
+            st.write(streak)
+            break
+        continue
+    if a != ans:
+        st.write("Oh no!! I guessed", a)
+        time.sleep(0.5)
+        st.write(f"Try again......")
+        m += 1
+        if m == 3:
+            streak = 'LOOSSER'
+            st.write(streak)
+        continue
+st.write('SCORE :', s)
 
-    # Connect to SQLite database
-    conn = connect_db()
-    c = conn.cursor()
+# Connect to SQLite database
+conn = connect_db()
+c = conn.cursor()
 
-    # Insert data into SQLite database
-    sql = "INSERT INTO player_data (Player_Name, Score, Fame) VALUES (?, ?, ?)"
-    val = (name, s, streak)
-    c.execute(sql, val)
-    conn.commit()
+# Insert data into SQLite database
+sql = "INSERT INTO player_data (Player_Name, Score, Fame) VALUES (?, ?, ?)"
+val = (name, s, streak)
+c.execute(sql, val)
+conn.commit()
 
-    st.write("Data saved to SQLite database")
+st.write("Data saved to SQLite database")
 
-    new_res_button = st.button("Want to know Fame info?")
-    if new_res_button:
-        st.write('Three streaks --- king of kings')
-        st.write('Two streaks ---- classic')
-        st.write('All losses --- Looser')
+new_res_checkbox = st.checkbox("Want to know Fame info?")
+if new_res_checkbox:
+    st.write('Three streaks --- king of kings')
+    st.write('Two streaks ---- classic')
+    st.write('All losses --- Looser')
+else:
+    st.write("No problem! Maybe next time.")
+
+user_ans_checkbox = st.checkbox("Wanna help developer to buy a dosa?")
+upi_id = "70@axisb"
+if user_ans_checkbox:
+    st.write("1. Buy a plain dosa (Rs 30)")
+    st.write("2. Buy a masala dosa (Rs 50)")
+    st.write("3. Buy a special masala dosa XL (Rs 100)")
+
+    choice = st.radio("Enter the option you want to select from above", (1, 2, 3))
+    if choice in [1, 2, 3]:
+        price = 30 if choice == 1 else 50 if choice == 2 else 100
+        qr_data = f"upi://pay?pa={upi_id}&am={price}&pn=Dosa Payment"
+        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
+        qr.add_data(qr_data)
+        qr.make(fit=True)
+        qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
+        title = f'    Contributing Rs.{price} for Dosa'
+        draw = ImageDraw.Draw(qr_img)
+        font_size = 24
+        draw.text((10, qr_img.size[1] - 40), title, fill='black', font=ImageFont.truetype("arial.ttf", font_size))
+
+        plt.figure(figsize=(3, 3))
+        plt.imshow(qr_img)
+        plt.axis('off')
+        st.pyplot()
+        st.write("Thank you! for your generosity :)")
     else:
-        st.write("No problem! Maybe next time.")
+        st.write("Invalid choice!")
 
-    user_ans_button = st.button("Wanna help developer to buy a dosa?")
-    upi_id = "70@axisb"
-    if user_ans_button:
-        st.write("1. Buy a plain dosa (Rs 30)")
-        st.write("2. Buy a masala dosa (Rs 50)")
-        st.write("3. Buy a special masala dosa XL (Rs 100)")
-
-        choice = st.radio("Enter the option you want to select from above", (1, 2, 3))
-        if choice in [1, 2, 3]:
-            price = 30 if choice == 1 else 50 if choice == 2 else 100
-            qr_data = f"upi://pay?pa={upi_id}&am={price}&pn=Dosa Payment"
-            qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
-            qr.add_data(qr_data)
-            qr.make(fit=True)
-            qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
-            title = f'    Contributing Rs.{price} for Dosa'
-            draw = ImageDraw.Draw(qr_img)
-            font_size = 24
-            draw.text((10, qr_img.size[1] - 40), title, fill='black', font=ImageFont.truetype("arial.ttf", font_size))
-
-            plt.figure(figsize=(3, 3))
-            plt.imshow(qr_img)
-            plt.axis('off')
-            st.pyplot()
-            st.write("Thank you! for your generosity :)")
-        else:
-            st.write("Invalid choice!")
-
-    else:
-        st.write("No problem! Maybe next time.")
+else:
+    st.write("No problem! Maybe next time.")
 
 if __name__ == "__main__":
-    main()
+main()
