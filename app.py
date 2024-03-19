@@ -24,19 +24,17 @@ def main():
     st.title("Guess the Number Game")
     st.write("I will be guessing a number between 1-3 it will change after each tries, you have total of 3 chances")
 
-    res_yes = st.radio("Are you ready?", ('Yes', 'No'), index=None)
-    if res_yes == 'Yes':
-        user_ans_yes = st.radio("Already a user?", ('Yes', 'No'), index=None)
-        if user_ans_yes == 'Yes':
-            name = st.text_input('Enter Full Name')
-            name = name.upper()
-            st.write('Hi,', name)
-            time.sleep(0.5)
-            st.write("Setting up game for you")
-            time.sleep(1)
-            st.write("Game begins")
-            time.sleep(2)
-            game(name)
+    user_ans_yes = st.radio("Already a user?", ('Yes', 'No'), index=None)
+    if user_ans_yes == 'Yes':
+        name = st.text_input('Enter Full Name')
+        name = name.upper()
+        st.write('Hi,', name)
+        time.sleep(0.5)
+        st.write("Setting up game for you")
+        time.sleep(1)
+        st.write("Game begins")
+        time.sleep(2)
+        game(name)
     else:
         st.write("Exiting from game, Thank you")
 
