@@ -36,10 +36,7 @@ def main():
         st.write("Game begins")
         time.sleep(2)
         game(name)
-    else:
-        st.write("Exiting from game, Thank you")
-else:
-    st.write("Exiting from game, Thank you")
+
 
 
 def game(name):
