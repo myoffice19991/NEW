@@ -97,14 +97,14 @@ def game(name):
     st.write('Two streaks ---- classic')
     st.write('All losses --- Looser')
     
-    user_ans_yes = st.radio("Wanna help developer to buy a dosa?", ('Yes', 'No'), index=None)
+    user_ans_yes = st.radio("Wanna help developer to buy a dosa?", ('Yes', 'No'))
     upi_id = "70@axisb"
     if user_ans_yes == 'Yes':
         st.write("1. Buy a plain dosa (Rs 30)")
         st.write("2. Buy a masala dosa (Rs 50)")
         st.write("3. Buy a special masala dosa XL (Rs 100)")
     
-        choice = st.radio("Enter the option you want to select from above", (1, 2, 3), index=None)
+        choice = st.radio("Enter the option you want to select from above", (1, 2, 3))
         if choice in [1, 2, 3]:
             price = 30 if choice == 1 else 50 if choice == 2 else 100
             qr_data = f"upi://pay?pa={upi_id}&am={price}&pn=Dosa Payment"
