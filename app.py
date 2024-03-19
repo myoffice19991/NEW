@@ -6,7 +6,7 @@ import qrcode
 from PIL import ImageDraw, ImageFont
 import matplotlib.pyplot as plt
 import sqlite3
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 # Connect to SQLite database
 def connect_db():
     return sqlite3.connect('player_data.db')
