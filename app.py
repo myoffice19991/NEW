@@ -115,7 +115,7 @@ def game(name):
             qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
         
             #plt.figure(figsize=(3, 3))
-            st.pyplot(fig, width=10, height=10)
+            st.pyplot(plt.figure(figsize=(3, 3)))
             plt.imshow(qr_img)
             plt.axis('off')
             st.pyplot(border_pad=0)  # Adjust borderpad parameter to control the border size
