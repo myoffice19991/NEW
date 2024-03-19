@@ -112,17 +112,23 @@ def game(name):
             qr.add_data(qr_data)
             qr.make(fit=True)
             qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
-            
-            plt.figure(figsize=(3, 3))
-            plt.imshow(qr_img)
-            plt.axis('off')
-            st.pyplot()
+            resized_img = qr_img.resize((150, 150))  # Adjust the size as needed
+
+            # Convert the PIL Image to bytes
+            img_bytes = io.BytesIO()
+            resized_img.save(img_bytes, format='PNG')
+            img_bytes = img_bytes.getvalue()
+        
+            # Display the resized image
+            st.image(img_bytes, caption='QR Code', use_column_width=True)
+        
+            # Display a message after the image
             st.write("Thank you! for your generosity :)")
-        else:
-            st.write("Invalid choice!")
+                else:
+                    st.write("Invalid choice!")
     
-    else:
-        st.write("No problem! Maybe next time.")
+        else:
+            st.write("No problem! Maybe next time.")
 
 if __name__ == "__main__":
     main()
