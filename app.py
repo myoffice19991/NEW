@@ -27,7 +27,7 @@ def main():
     name_entered = False
 
 
-    user_ans_yes = st.radio("Already a user?", ('Yes', 'No'), index=None)
+    user_ans_yes = st.radio("Already a user?", ('Yes', 'No'))
     if user_ans_yes == 'Yes':
         name = st.text_input('Enter Full Name')
         name = name.upper()
