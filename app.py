@@ -108,12 +108,12 @@ def game(name):
         if choice in [1, 2, 3]:
             price = 30 if choice == 1 else 50 if choice == 2 else 100
             qr_data = f"upi://pay?pa={upi_id}&am={price}&pn=Dosa Payment"
-            qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
+            qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=3, border=4)
             qr.add_data(qr_data)
             qr.make(fit=True)
             qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
             
-            plt.figure(figsize=(1, 1))
+            plt.figure(figsize=(3, 3))
             plt.imshow(qr_img)
             plt.axis('off')
             st.pyplot()
