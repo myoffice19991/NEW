@@ -78,58 +78,58 @@ def game(name):
                 streak = 'LOOSSER'
                 st.write(streak)
             continue
-st.write('SCORE :', s)
+    st.write('SCORE :', s)
 
-# Connect to SQLite database
-conn = connect_db()
-c = conn.cursor()
-
-# Insert data into SQLite database
-sql = "INSERT INTO player_data (Player_Name, Score, Fame) VALUES (?, ?, ?)"
-val = (name, s, streak)
-c.execute(sql, val)
-conn.commit()
-
-st.write("Data saved to SQLite database")
-
-new_res_yes = st.radio("Want to know Fame info?", ('Yes', 'No'), index=None)
-if new_res_yes == 'Yes':
-    st.write('Three streaks --- king of kings')
-    st.write('Two streaks ---- classic')
-    st.write('All losses --- Looser')
-else:
-    st.write("No problem! Maybe next time.")
-
-user_ans_yes = st.radio("Wanna help developer to buy a dosa?", ('Yes', 'No'), index=None)
-upi_id = "70@axisb"
-if user_ans_yes == 'Yes':
-    st.write("1. Buy a plain dosa (Rs 30)")
-    st.write("2. Buy a masala dosa (Rs 50)")
-    st.write("3. Buy a special masala dosa XL (Rs 100)")
-
-    choice = st.radio("Enter the option you want to select from above", (1, 2, 3), index=None)
-    if choice in [1, 2, 3]:
-        price = 30 if choice == 1 else 50 if choice == 2 else 100
-        qr_data = f"upi://pay?pa={upi_id}&am={price}&pn=Dosa Payment"
-        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
-        qr.add_data(qr_data)
-        qr.make(fit=True)
-        qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
-        title = f'    Contributing Rs.{price} for Dosa'
-        draw = ImageDraw.Draw(qr_img)
-        font_size = 24
-        draw.text((10, qr_img.size[1] - 40), title, fill='black', font=ImageFont.truetype("arial.ttf", font_size))
-
-        plt.figure(figsize=(3, 3))
-        plt.imshow(qr_img)
-        plt.axis('off')
-        st.pyplot()
-        st.write("Thank you! for your generosity :)")
+    # Connect to SQLite database
+    conn = connect_db()
+    c = conn.cursor()
+    
+    # Insert data into SQLite database
+    sql = "INSERT INTO player_data (Player_Name, Score, Fame) VALUES (?, ?, ?)"
+    val = (name, s, streak)
+    c.execute(sql, val)
+    conn.commit()
+    
+    st.write("Data saved to SQLite database")
+    
+    new_res_yes = st.radio("Want to know Fame info?", ('Yes', 'No'), index=None)
+    if new_res_yes == 'Yes':
+        st.write('Three streaks --- king of kings')
+        st.write('Two streaks ---- classic')
+        st.write('All losses --- Looser')
     else:
-        st.write("Invalid choice!")
-
-else:
-    st.write("No problem! Maybe next time.")
+        st.write("No problem! Maybe next time.")
+    
+    user_ans_yes = st.radio("Wanna help developer to buy a dosa?", ('Yes', 'No'), index=None)
+    upi_id = "70@axisb"
+    if user_ans_yes == 'Yes':
+        st.write("1. Buy a plain dosa (Rs 30)")
+        st.write("2. Buy a masala dosa (Rs 50)")
+        st.write("3. Buy a special masala dosa XL (Rs 100)")
+    
+        choice = st.radio("Enter the option you want to select from above", (1, 2, 3), index=None)
+        if choice in [1, 2, 3]:
+            price = 30 if choice == 1 else 50 if choice == 2 else 100
+            qr_data = f"upi://pay?pa={upi_id}&am={price}&pn=Dosa Payment"
+            qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
+            qr.add_data(qr_data)
+            qr.make(fit=True)
+            qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
+            title = f'    Contributing Rs.{price} for Dosa'
+            draw = ImageDraw.Draw(qr_img)
+            font_size = 24
+            draw.text((10, qr_img.size[1] - 40), title, fill='black', font=ImageFont.truetype("arial.ttf", font_size))
+    
+            plt.figure(figsize=(3, 3))
+            plt.imshow(qr_img)
+            plt.axis('off')
+            st.pyplot()
+            st.write("Thank you! for your generosity :)")
+        else:
+            st.write("Invalid choice!")
+    
+    else:
+        st.write("No problem! Maybe next time.")
 
 if __name__ == "__main__":
     main()
