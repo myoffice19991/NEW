@@ -114,7 +114,7 @@ def game(name):
             qr.make(fit=True)
             qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
         
-            plt.figure(figsize=(3, 3))
+            #plt.figure(figsize=(3, 3))
             st.pyplot(fig, width=10, height=10)
             plt.imshow(qr_img)
             plt.axis('off')
