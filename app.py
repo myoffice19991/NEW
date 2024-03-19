@@ -103,7 +103,7 @@ def game(name):
         st.write("1. Buy a plain dosa (Rs 30)")
         st.write("2. Buy a masala dosa (Rs 50)")
         st.write("3. Buy a special masala dosa XL (Rs 100)")
-    
+        st.set_option('deprecation.showPyplotGlobalUse', False) 
         choice = st.radio("Enter the option you want to select from above", (1, 2, 3))
         if choice in [1, 2, 3]:
             price = 30 if choice == 1 else 50 if choice == 2 else 100
