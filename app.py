@@ -112,11 +112,7 @@ def game(name):
             qr.add_data(qr_data)
             qr.make(fit=True)
             qr_img = qr.make_image(fill_color="black", back_color=(230, 250, 250))
-            title = f'    Contributing Rs.{price} for Dosa'
-            draw = ImageDraw.Draw(qr_img)
-            font_size = 24
-            draw.text((10, qr_img.size[1] - 40), title, fill='black', font=ImageFont.truetype("arial.ttf", font_size))
-    
+            
             plt.figure(figsize=(3, 3))
             plt.imshow(qr_img)
             plt.axis('off')
