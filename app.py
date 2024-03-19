@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import io
 import time
 import numpy as np
 import qrcode
